@@ -3,9 +3,18 @@ Advent of Code 2020 - day 2: https://adventofcode.com/2020/day/2
 Password Philosophy
 """
 
-def validate(pair: dict) -> bool:
+def part1(pair: dict) -> bool:
     occurrences = pair["password"].count(pair["policy"]["char"])
     if pair["policy"]["min"] <= occurrences <= pair["policy"]["max"]:
+        return True
+
+    return False
+
+
+def part2(pair: dict) -> bool:
+    char = pair["policy"]["char"]
+    password = pair["password"]
+    if (password[pair["policy"]["min"]] == char) ^ (password[pair["policy"]["max"]] == char):
         return True
 
     return False
@@ -30,12 +39,16 @@ def check_passwords(input_file: str) -> None:
             }
             input.append(pair)
     
-    valid = 0
+    validp1 = 0
+    validp2 = 0
     for pair in input:
-        if validate(pair):
-            valid += 1
+        if part1(pair):
+            validp1 += 1
+        if part2(pair):
+            validp2 += 1
 
-    print(f"Valid passwords: {valid}")
+    print(f"Valid passwords (part 1): {validp1}")
+    print(f"Valid passwords (part 2): {validp2}")
 
 
 if __name__ == "__main__":
