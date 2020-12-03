@@ -3,14 +3,14 @@ Advent of Code 2020 - day 1: https://adventofcode.com/2020/day/1
 Report Repair
 """
 import itertools
+import math
 
-def part1(numbers: list) -> None:
-    for subset in itertools.combinations(numbers, 2):
+def repair(numbers: list, setsize: int) -> None:
+    for subset in itertools.combinations(numbers, setsize):
         total = sum(subset)
         if total == 2020:
-            print(f"{subset[0]*subset[1]}")
+            print(f"{math.prod(subset)}")
             break
-
 
 def scour_report(input_file: str) -> None:
     """ check a report for numbers that add to 2020 and multiply them """
@@ -19,9 +19,8 @@ def scour_report(input_file: str) -> None:
         for line in reader.readlines():
             numbers.append(int(line))
     
-    part1(numbers)
-
-
+    repair(numbers, 2)
+    repair(numbers, 3)
 
 
 if __name__ == "__main__":
