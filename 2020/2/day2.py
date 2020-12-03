@@ -4,6 +4,10 @@ Password Philosophy
 """
 
 def part1(pair: dict) -> bool:
+    """
+    check if password meets policy: between min & max numbers
+    of required character
+    """
     occurrences = pair["password"].count(pair["policy"]["char"])
     if pair["policy"]["min"] <= occurrences <= pair["policy"]["max"]:
         return True
@@ -12,6 +16,10 @@ def part1(pair: dict) -> bool:
 
 
 def part2(pair: dict) -> bool:
+    """
+    check if password meets policy: need one (and only one) of character
+    at positions specified in policy
+    """
     char = pair["policy"]["char"]
     password = pair["password"]
     if (password[pair["policy"]["min"]] == char) ^ (password[pair["policy"]["max"]] == char):
@@ -22,12 +30,12 @@ def part2(pair: dict) -> bool:
 
 def check_passwords(input_file: str) -> None:
     """ check a list of passwords against their policies """
-    input = []
+    password_sets = []
     with open(input_file, 'r') as reader:
         for line in reader.readlines():
-            policy_text,sep,password = line.partition(':')
-            constraint,sep,char = policy_text.partition(' ')
-            lower,sep,upper = constraint.partition('-')
+            policy_text, sep, password = line.partition(':')
+            constraint, sep, char = policy_text.partition(' ')
+            lower, sep, upper = constraint.p('-')
 
             pair = {
                 "policy": {
@@ -37,11 +45,11 @@ def check_passwords(input_file: str) -> None:
                 },
                 "password": password.rstrip()
             }
-            input.append(pair)
-    
+            password_sets.append(pair)
+
     validp1 = 0
     validp2 = 0
-    for pair in input:
+    for pair in password_sets:
         if part1(pair):
             validp1 += 1
         if part2(pair):
