@@ -12,21 +12,16 @@ def parse_input(raw_input: list) -> list:
         if not line:
             index += 1
 
-        try:
-            passports[index].extend(line)
-        except IndexError:
-            passports.append(line)
-
-    for index, item in enumerate(passports):
-        passport = {}
-        for entry in item:
-            field, sep, value = entry.partition(':')
-            passport[field] = value
-
-        passports[index] = passport
-
+        for entry in line:
+            try:
+                field, sep, value = entry.partition(':')
+                passports[index][field] = value
+            except IndexError:
+                passports.append({})
+                passports[index][field] = value
 
     return passports
+
 
 def validate_fields(passports: list) -> int:
     """ Return the number of passports with all required fields """
@@ -49,10 +44,8 @@ def valid_year(year: int, min_year: int, max_year: int) -> bool:
 
 def valid_height(raw_height: str) -> bool:
     """ Determine if the height is valid """
-    cm_max = 193
-    cm_min = 150
-    in_max = 76
-    in_min = 59
+    cm_min, cm_max = 150, 193
+    in_min, in_max = 59, 76
     split = re.match(r"([0-9]+)([a-z]+)", raw_height, re.I)
     if split:
         height = split.groups()
