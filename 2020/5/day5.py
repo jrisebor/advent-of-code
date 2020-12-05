@@ -27,6 +27,7 @@ def boarding(input_file: str) -> None:
         for line in reader.readlines():
             boarding_passes.append(list(line.strip()))
 
+    # part 1
     highest = 0
     for seat in boarding_passes:
         seat_id = decode_pass(seat)
@@ -34,6 +35,20 @@ def boarding(input_file: str) -> None:
             highest = seat_id
 
     print(f"Highest Seat ID: {highest}")
+
+    # part 2
+    full_seats = []
+    for seat in boarding_passes:
+        full_seats.append(decode_pass(seat))
+
+    full_seats = sorted(full_seats)
+    last_seat = 0
+    for seat in full_seats:
+        if seat == last_seat + 2:
+            print(f"Your Seat ID is: {seat - 1}")
+            break
+        last_seat = seat
+
 
 if __name__ == "__main__":
     boarding("input.txt")
