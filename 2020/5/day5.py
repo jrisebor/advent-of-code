@@ -4,9 +4,9 @@ Binary Boarding
 """
 
 def decode_pass(seat: str) -> int:
+    """ Given a binary space partition code, determine the seat ID """
     lower_rows, upper_rows = 0, 127
     lower_columns, upper_columns = 0, 7
-    row, column = 0, 0
     for step in list(seat):
         if step == "F":
             upper_rows = int((upper_rows - lower_rows) / 2) + lower_rows
